@@ -6,12 +6,6 @@
 
 
 
-@layer base {
-    body {
-        height: 200vh;
-    }
-}
-
 @layer utilities {
     .container {
         @apply mx-auto w-[90%] sm:w-[85%] max-w-screen-xl

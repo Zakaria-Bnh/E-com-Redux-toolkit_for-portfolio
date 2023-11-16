@@ -32,7 +32,7 @@ const Hero = () => {
   ];
 
   return (
-    <div className="container | pt-[130px] ">
+    <div className="container | py-12 ">
       <HeroSlider setisSlide={setisSlide} isSlide={isSlide}>
         {heroslidedata.map((slide, index) => {
           return (

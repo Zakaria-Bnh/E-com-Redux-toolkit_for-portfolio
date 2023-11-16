@@ -1,18 +1,29 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FetchProducts, SelecteProducts } from "../app/slices/ProductsSlices";
-import { ProductQuickView, ProductCard } from "./index";
+import { ProductCard, ProductQuickView } from "./index";
 import { SelectIsShowModal } from "../app/slices/ProductQuickViewSlice";
 
 const Products = () => {
   const products = useSelector(SelecteProducts);
-  const showModal = useSelector(SelectIsShowModal);
   const dispatch = useDispatch();
+  const showModal = useSelector(SelectIsShowModal);
 
   useEffect(() => {
     dispatch(FetchProducts());
-    console.log(products, "heelo from edddect");
   }, []);
+
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [showModal]);
 
   return (
     <div>

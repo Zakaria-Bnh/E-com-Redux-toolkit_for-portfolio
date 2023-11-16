@@ -20,7 +20,7 @@ const Header = () => {
   });
 
   return (
-    <header className={`${ismenu ? ' shadow-primary' : ''} fixed bg-secondary w-full  py-4 sm:py-6 transition-all duration-150 z-10`}>
+    <header className={`${ismenu ? ' shadow-primary' : ''} sticky top-0 bg-secondary w-full  py-4 sm:py-6 transition-all duration-150 z-10`}>
       <div className="container |  flex justify-between items-center">
         {/* Logo */}
         <Link to="/" className="rounded text-2xl font-bold tracking-tighter">
