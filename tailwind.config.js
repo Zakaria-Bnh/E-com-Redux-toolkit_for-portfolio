@@ -7,6 +7,9 @@ export default {
   theme: {
 
     extend: {
+      fontFamily: {
+        primary:  "'Raleway', sans-serif",
+      },
       colors: {
         'primary': '#EBE3D5',
         'secondary': '#F3EEEA', 

@@ -32,7 +32,7 @@ const Header = () => {
             ismenu ? "hidden tablet:block" : ""
           } absolute sm:relative sm:top-0 bg-white sm:bg-transparent top-full w-full left-0 shadow-primary tablet:shadow-none`}
         >
-          <ul className="flex justify-center space-x-3 sm:space-x-4 text-gray-500 w-full text-sm py-3">
+          <ul className="flex justify-center space-x-3 md:space-x-6 md:text-lg text-gray-500 w-full text-sm py-3">
             <li className="hover:text-gray-700 hover:font-semibold">
               <Link to="/" className="text-orange">
                 HOME

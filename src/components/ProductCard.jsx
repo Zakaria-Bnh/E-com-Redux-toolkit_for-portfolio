@@ -16,8 +16,8 @@ const ProductCard = ({ data }) => {
 
   return (
     <div>
-      <div className="h-[350px] bg-white rounded-md mx-auto w-full max-w-sm  flex flex-col group ">
-        <div className="w-[200px] min-h-[180px] py-4 aspect-square mx-auto h-full flex flex-col justify-center items-center">
+      <div className="h-[350px] bg-white rounded-md mx-auto w-full max-w-sm hover:shadow-md  flex flex-col group ">
+        <div onClick={() => handlequickview()} className="w-[200px] min-h-[180px] py-4 aspect-square mx-auto h-full flex flex-col justify-center items-center cursor-pointer">
           <img
             className="max-h-full group-hover:scale-105 transition-all duration-400"
             src={data.image}
@@ -29,11 +29,11 @@ const ProductCard = ({ data }) => {
             {data.title}
           </h2>
           <div className="flex-1 flex flex-col justify-end">
-            <div className="flex justify-around mb-3">
+            <div className="flex items-end justify-around mb-3">
               <p className="text-gray-500">
-                <span className="line-through">{data.price}</span>$
+                <span className="line-through font-light">{data.price}</span>$
               </p>
-              <p>{(data.price * 0.7).toFixed(2)}$</p>
+              <p className="text-xl">{(data.price * 0.7).toFixed(2)}$</p>
             </div>
             <div className="flex sm:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <button

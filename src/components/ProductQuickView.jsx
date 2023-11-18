@@ -3,10 +3,10 @@ import {
   SelectProductData,
   closeModal,
 } from "../app/slices/ProductQuickViewSlice";
+import { RatingStars } from "../utilities/index";
+
 import { AiOutlineClose } from "react-icons/ai";
 import { BsFillHeartFill } from "react-icons/bs";
-
-
 
 const ProductQuickView = () => {
   const product = useSelector(SelectProductData);
@@ -28,7 +28,7 @@ const ProductQuickView = () => {
           <div className="flex-1 flex justify-center items-center md:items-start">
             <div className=" max-w-[280px] md:max-w-[320px]  p-12 mx-auto">
               <img
-                className="max-h-[200px] "
+                className="max-h-[200px]"
                 src={product.image}
                 alt={product.title}
               />
@@ -37,16 +37,19 @@ const ProductQuickView = () => {
           <div className=" overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400  scrollbar-track-gray-300 flex-1 p-4 pb-6 bg-lightSecondary">
             <div
               onClick={() => handlecloseQuickView()}
-              className="w-full mb-6 cursor-pointer"
+              className="w-full mb-8 cursor-pointer"
             >
               <AiOutlineClose className=" absolute right-3 top-3 ml-auto w-5 h-5 hover:text-red-600 " />
             </div>
             <h1 className="mb-2 font-semibold text-xl">{product.title}</h1>
-            <div className="flex gap-4 mb-6">
+            <div className="flex items-end gap-4 mb-6">
               <p className="text-gray-500">
-                <span className="line-through">{product.price}</span>$
+                <span className="line-through font-light">{product.price}</span>$
               </p>
-              <p>{(product.price * 0.7).toFixed(2)}$</p>
+              <p className="text-xl">{(product.price * 0.7).toFixed(2)}$</p>
+            </div>
+            <div className="mb-2">
+              <RatingStars rate={product.rating.rate} />
             </div>
             <p className="text-gray-500 mb-6 line-clamp-5">
               {product.description}
@@ -60,8 +63,8 @@ const ProductQuickView = () => {
                   <button>-</button>
                 </div>
               </div>
-              <button className="bg-darkBlue w-full p-3 hover:opacity-80 text-white flex-1">
-                Add to cart
+              <button className="bg-darkBlue tracking-wide  w-full p-3 hover:opacity-80 text-white flex-1">
+                ADD TO CART
               </button>
             </div>
             <button className="flex items-center gap-2">

@@ -7,7 +7,7 @@ const Main = () => {
   return (
     <>
      <Hero />
-     <Products />   
+     <Products showCategories={true} />   
     </>
   )
 }
