@@ -32,7 +32,7 @@ const Hero = () => {
   ];
 
   return (
-    <div className=" | pt-20 pb-12 ">
+    <div className="pt-8 sm:pt-0 pb-12 ">
       <HeroSlider setisSlide={setisSlide} isSlide={isSlide}>
         {heroslidedata.map((slide, index) => {
           return (
@@ -40,7 +40,7 @@ const Hero = () => {
             <img className={`${isSlide ? 'animate-scale-110' : ''} w-full h-auto`} src={slide.img} alt={slide.alt} />
               <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50"></div>
               <div className="absolute w-[80%] m-auto inset-0 flex flex-col text-center justify-center p-4 text-white z-10">
-                <h1 className="font-primary uppercase tracking-widest leading-3 text-2xl sm:text-4xl md:text-5xl font-bold mb-4 md:mb-6">{slide.heading}</h1>
+                <h1 className="font-primary uppercase tracking-widest  text-2xl sm:text-4xl md:text-5xl font-bold mb-4 md:mb-6">{slide.heading}</h1>
                 <p className="text-xl hidden tablet:block">{slide.description}</p>
               </div>
             </div>

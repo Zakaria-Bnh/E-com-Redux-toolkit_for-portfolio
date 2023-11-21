@@ -7,6 +7,11 @@ export default {
   theme: {
 
     extend: {
+      gridTemplateColumns: {
+        1_30: '1fr 30%',
+        30_1: '30% 1fr',
+        1_40: '1fr 40%'
+      },
       fontFamily: {
         primary:  "'Raleway', sans-serif",
       },

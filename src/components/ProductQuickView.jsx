@@ -1,20 +1,42 @@
 import { useDispatch, useSelector } from "react-redux";
+// actions from slices
 import {
   SelectProductData,
   closeModal,
 } from "../app/slices/ProductQuickViewSlice";
+import { addtocart, selectCartitems } from "../app/slices/CartSlice";
+//utilities
 import { RatingStars } from "../utilities/index";
-
+// icons
 import { AiOutlineClose } from "react-icons/ai";
 import { BsFillHeartFill } from "react-icons/bs";
+import { useEffect, useState } from "react";
 
 const ProductQuickView = () => {
+  //hooks
   const product = useSelector(SelectProductData);
+  const cartItems = useSelector(selectCartitems);
   const dispatch = useDispatch();
+  const [itemIsAdded, setitemIsAdded] = useState(false);
 
+  // component's functions
   const handlecloseQuickView = () => {
     dispatch(closeModal());
   };
+
+  const handleAddtocart = () => {
+    dispatch(addtocart(product));
+    setitemIsAdded(true);
+  };
+
+  
+  const AddedProduct =  cartItems.find((item) => {
+    return item.id === product.id;
+  })
+
+  useEffect(() => {
+    setitemIsAdded(AddedProduct) 
+  }, [])
 
   return (
     <div className="flex justify-center">
@@ -44,7 +66,8 @@ const ProductQuickView = () => {
             <h1 className="mb-2 font-semibold text-xl">{product.title}</h1>
             <div className="flex items-end gap-4 mb-6">
               <p className="text-gray-500">
-                <span className="line-through font-light">{product.price}</span>$
+                <span className="line-through font-light">{product.price}</span>
+                $
               </p>
               <p className="text-xl">{(product.price * 0.7).toFixed(2)}$</p>
             </div>
@@ -58,13 +81,18 @@ const ProductQuickView = () => {
               <div className=" flex items-center w-fit p-3 gap-3 border rounded-sm border-gray-500">
                 <span className="text-gray-500">quantity</span>
                 <div className="flex items-center gap-2">
-                  <button>+</button>
-                  <span>0</span>
+                <button>+</button>
+                  <span>{itemIsAdded ? .amount : 0 }</span>
                   <button>-</button>
                 </div>
               </div>
-              <button className="bg-darkBlue tracking-wide  w-full p-3 hover:opacity-80 text-white flex-1">
-                ADD TO CART
+              <button
+                onClick={() => handleAddtocart()}
+                className={`${
+                  itemIsAdded ? "bg-amber-500" : "bg-darkBlue"
+                } tracking-wide  w-full p-3 hover:opacity-80 text-white flex-1`}
+              >
+                {itemIsAdded ? "ITEM IS ADDED !" : "ADD TO CART"}
               </button>
             </div>
             <button className="flex items-center gap-2">

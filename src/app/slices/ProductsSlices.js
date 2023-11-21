@@ -29,14 +29,12 @@ const ProductsSlice = createSlice({
       .addCase(FetchProducts.fulfilled, (state, action) => {
         state.status = "success";
         state.products = action.payload;
-        console.log(state.status);
-        console.log(state.products);
+
         
       })
       .addCase(FetchProducts.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
-        console.log(state.status);
       });
   },
 });
