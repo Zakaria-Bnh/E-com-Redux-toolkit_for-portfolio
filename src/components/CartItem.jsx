@@ -4,7 +4,6 @@ import {AiOutlineClose} from 'react-icons/ai'
 const CartItem = ({ cartItem }) => {
 
 
-    console.log(cartItem)
   const { title, image, price, amount } = cartItem;
 
 

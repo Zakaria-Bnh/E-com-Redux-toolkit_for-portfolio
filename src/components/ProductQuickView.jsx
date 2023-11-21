@@ -17,7 +17,7 @@ const ProductQuickView = () => {
   const product = useSelector(SelectProductData);
   const cartItems = useSelector(selectCartitems);
   const dispatch = useDispatch();
-  const [itemIsAdded, setitemIsAdded] = useState(false);
+  const [itemIsAdded, setitemIsAdded] = useState();
 
   // component's functions
   const handlecloseQuickView = () => {
@@ -82,7 +82,7 @@ const ProductQuickView = () => {
                 <span className="text-gray-500">quantity</span>
                 <div className="flex items-center gap-2">
                 <button>+</button>
-                  <span>{itemIsAdded ? .amount : 0 }</span>
+                  <span>{itemIsAdded ? AddedProduct.amount : 0 }</span>
                   <button>-</button>
                 </div>
               </div>
