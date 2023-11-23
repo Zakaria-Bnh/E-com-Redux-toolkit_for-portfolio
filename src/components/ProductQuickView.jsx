@@ -11,6 +11,7 @@ import { RatingStars } from "../utilities/index";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsFillHeartFill } from "react-icons/bs";
 import { useEffect, useState } from "react";
+import { increaseAmount, decreaseAmount } from "../app/slices/CartSlice";
 
 const ProductQuickView = () => {
   //hooks
@@ -18,25 +19,38 @@ const ProductQuickView = () => {
   const cartItems = useSelector(selectCartitems);
   const dispatch = useDispatch();
   const [itemIsAdded, setitemIsAdded] = useState();
+  const [amount, setamount] = useState(1);
 
   // component's functions
   const handlecloseQuickView = () => {
     dispatch(closeModal());
   };
 
-  const handleAddtocart = () => {
-    dispatch(addtocart(product));
+  const handleAddtocart = (e) => {
+    itemIsAdded ?  e.preventDefault() : dispatch(addtocart({ ...product, amount }))
+
     setitemIsAdded(true);
   };
 
-  
-  const AddedProduct =  cartItems.find((item) => {
+  const AddedProduct = cartItems.find((item) => {
     return item.id === product.id;
-  })
+  });
 
   useEffect(() => {
-    setitemIsAdded(AddedProduct) 
-  }, [])
+    setitemIsAdded(AddedProduct);
+  }, []);
+
+  const handleIncreaseAmount = (e) => {
+    itemIsAdded ?  e.preventDefault() : setamount((previousAmount) => previousAmount + 1);
+  };
+
+  const handleDecreaseAmount = (e) => {
+    if (amount > 1 && !itemIsAdded) {
+      setamount((previousAmount) => previousAmount - 1);
+    } else {
+      e.preventDefault()
+    }
+  };
 
   return (
     <div className="flex justify-center">
@@ -78,19 +92,19 @@ const ProductQuickView = () => {
               {product.description}
             </p>
             <div className=" flex flex-col items-start   gap-2 mb-6 rounded-sm">
-              <div className=" flex items-center w-fit p-3 gap-3 border rounded-sm border-gray-500">
+              <div className= {` ${itemIsAdded ? 'opacity-50' : ''} flex items-center w-fit p-3 gap-3 border rounded-sm border-gray-500 transition-opacity duration-300`}>
                 <span className="text-gray-500">quantity</span>
                 <div className="flex items-center gap-2">
-                <button>+</button>
-                  <span>{itemIsAdded ? AddedProduct.amount : 0 }</span>
-                  <button>-</button>
+                  <button onClick={handleIncreaseAmount}>+</button>
+                  <span>{amount}</span>
+                  <button onClick={handleDecreaseAmount}>-</button>
                 </div>
               </div>
               <button
-                onClick={() => handleAddtocart()}
+                onClick={ handleAddtocart}
                 className={`${
                   itemIsAdded ? "bg-amber-500" : "bg-darkBlue"
-                } tracking-wide  w-full p-3 hover:opacity-80 text-white flex-1`}
+                } tracking-wide  w-full p-3 hover:opacity-80 text-white flex-1 transition-colors duration-300`}
               >
                 {itemIsAdded ? "ITEM IS ADDED !" : "ADD TO CART"}
               </button>

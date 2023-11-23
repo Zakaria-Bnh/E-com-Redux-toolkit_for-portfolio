@@ -16,6 +16,11 @@ const CartDetails = ({ total }) => {
     }
   };
 
+  const handleShippingOptionChange = (e) => {
+    const selectedOption = e.target.value;
+    handleShippingPrice(selectedOption);
+  };
+
   return (
     <div className="py-6 px-4 sticky top-32 bg-secondary rounded-sm">
       <h3 className="text-2xl sm:text-2xl tracking-widest font-semibold mb-10">
@@ -33,10 +38,10 @@ const CartDetails = ({ total }) => {
         <form className="flex flex-col gap-3">
           <div className="flex gap-2 text-sm lg:text-base">
             <input
-              onClick={(e) => handleShippingPrice(e.target.value)}
+              onChange={handleShippingOptionChange}
               className="cursor-pointer"
               type="radio"
-              checked={shippingType === 'express'}
+              checked={shippingType === "express"}
               value="express"
               name="shipping"
               id="express"
@@ -47,10 +52,10 @@ const CartDetails = ({ total }) => {
           </div>
           <div className="flex gap-2 text-sm lg:text-base cursor-pointer">
             <input
-              onClick={(e) => handleShippingPrice(e.target.value)}
+              onChange={handleShippingOptionChange}
               className="cursor-pointer"
               type="radio"
-              checked={shippingType === 'standard'}
+              checked={shippingType === "standard"}
               value="standard"
               name="shipping"
               id="standard"
@@ -61,10 +66,10 @@ const CartDetails = ({ total }) => {
           </div>
           <div className="flex gap-2 text-sm lg:text-base cursor-pointer">
             <input
-              onClick={(e) => handleShippingPrice(e.target.value)}
+              onChange={handleShippingOptionChange}
               className="cursor-pointer"
               type="radio"
-              checked={shippingType === 'flat-rate'}
+              checked={shippingType === "flat-rate"}
               value="flat-rate"
               name="shipping"
               id="flat-rate"

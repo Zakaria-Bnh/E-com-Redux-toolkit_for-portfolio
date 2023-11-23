@@ -2,12 +2,18 @@ import { BsFillHeartFill } from "react-icons/bs";
 import { IoHeartDislikeSharp } from "react-icons/io5"; // for not heart
 import { useDispatch } from "react-redux";
 import { ViewProduct, openModal } from "../app/slices/ProductQuickViewSlice";
+import { animated, config, useSpring } from "react-spring";
 
 
 
-const ProductCard = ({ data }) => {
+const ProductCard = ({ data, index }) => {
   const dispatch = useDispatch();
-
+  const props = useSpring({
+    opacity: 1,
+    from : {opacity: 0},
+    config: config.molasses,
+    delay: index * 100,
+  })
 
   const handlequickview = () => {
     dispatch(openModal());
@@ -15,7 +21,7 @@ const ProductCard = ({ data }) => {
   };
 
   return (
-    <div>
+    <animated.div style={props}>
       <div className="h-[350px] bg-white rounded-md mx-auto w-full max-w-sm hover:shadow-md  flex flex-col group ">
         <div onClick={() => handlequickview()} className="w-[200px] min-h-[180px] py-4 aspect-square mx-auto h-full flex flex-col justify-center items-center cursor-pointer">
           <img
@@ -49,7 +55,7 @@ const ProductCard = ({ data }) => {
           </div>
         </div>
       </div>
-    </div>
+    </animated.div>
   );
 };
 

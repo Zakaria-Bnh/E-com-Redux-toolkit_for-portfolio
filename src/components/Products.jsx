@@ -54,7 +54,7 @@ const Products = ({ showCategories }) => {
         </ul>
       )}
       <div className=" grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 ">
-        {products.map((item) => {
+        {products.map((item, index) => {
           if (
             category === "all" ||
             (category === "cloths" &&
@@ -63,7 +63,7 @@ const Products = ({ showCategories }) => {
             (category === "jewelery" && item.category === "jewelery") ||
             (category === "electronics" && item.category === "electronics")
           ) {
-            return <ProductCard key={item.id} data={item} />;
+            return <ProductCard key={item.id} index={index} data={item} />;
           }
         })}
       </div>
