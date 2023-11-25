@@ -2,9 +2,14 @@ import { Link } from "react-router-dom";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { FaRegHeart } from "react-icons/fa";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { selectTotalPurchases } from "../app/slices/CartSlice";
+import { Selecttotalfavorites } from "../app/slices/FavoritesSlice";
 
 const Header = () => {
   const [ismenu, setismenu] = useState(false);
+  const totalNumOfPurchases = useSelector(selectTotalPurchases)
+  const totalNumOfFavorites = useSelector(Selecttotalfavorites)
 
   useEffect(() => {
     const handleMenuOnScroll = () => {
@@ -54,11 +59,11 @@ const Header = () => {
         </nav>
         <div className="flex gap-2">
           <Link to="/cart" className="flex gap-1 items-center">
-            <AiOutlineShoppingCart /> <span>(0)</span>
+            <AiOutlineShoppingCart /> <span>({totalNumOfPurchases})</span>
           </Link>
 
           <Link to="/favorites" className="flex gap-1 items-center">
-            <FaRegHeart /> <span>(0)</span>
+            <FaRegHeart /> <span>({totalNumOfFavorites})</span>
           </Link>
         </div>
       </div>

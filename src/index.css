@@ -10,6 +10,7 @@
     body{
         font-family: 'Questrial', sans-serif;
         letter-spacing: 1px;
+        overflow-x: hidden;
         }
 }
 

@@ -7,6 +7,7 @@ import {
   Header,
   Footer,
   Products,
+  Favorites,
 } from "./components/index";
 
 const App = () => {
@@ -14,15 +15,19 @@ const App = () => {
     <Router>
       <Header />
 
-      <main>
+      <main className="min-h-[80vh]">
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/products" element={<Products showCategories={false}/>} />
+          <Route
+            path="/products"
+            element={<Products showCategories={false} />}
+          />
           <Route
             path="/productdetails/:productID"
             element={<ProductDetails />}
           />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/favorites" element={<Favorites />} />
           <Route path="/notfoundpage" element={<NotFoundPage />} />
         </Routes>
       </main>

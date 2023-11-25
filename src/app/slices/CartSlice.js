@@ -58,5 +58,6 @@ export const selectCartitems = (state) => state.ShoppingCart.cartItems;
 export const selectTotalPrice = (state) => state.ShoppingCart.cartItems.reduce((acc, curr)=>{
   return acc + curr.price * curr.amount
 },0);
+export const selectTotalPurchases = (state) => state.ShoppingCart.cartItems.reduce((acc, curr) => acc + curr.amount ,0)
 
 export default CartSlice.reducer;

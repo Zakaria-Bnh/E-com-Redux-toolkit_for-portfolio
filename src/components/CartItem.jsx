@@ -3,25 +3,30 @@ import { decreaseAmount, increaseAmount, removeFromCart } from "../app/slices/Ca
 import { useDispatch } from "react-redux";
 
 const CartItem = ({ cartItem }) => {
-  const { title, image, price, amount } = cartItem;
-  const dispatch = useDispatch()
+// Destructuring properties from cartItem
+const { title, image, price, amount } = cartItem;
 
-  const handleRemoveFromCart = () => {
-    dispatch(removeFromCart(cartItem))
+// Redux setup
+const dispatch = useDispatch();
+
+// Function to handle removing item from the cart
+const handleRemoveFromCart = () => {
+  dispatch(removeFromCart(cartItem));
+};
+
+// Function to handle increasing the amount of the item in the cart
+const handleIncreaseAmount = () => {
+  dispatch(increaseAmount(cartItem));
+};
+
+// Function to handle decreasing the amount of the item in the cart
+const handleDecreaseAmount = () => {
+  if (amount < 2) {
+    dispatch(handleRemoveFromCart(cartItem));
+  } else {
+    dispatch(decreaseAmount(cartItem));
   }
-
-  const handleIncreaseAmount = () => {
-    dispatch(increaseAmount(cartItem))
-  }
-
-
-  const handleDecreaseAmount = () => {
-    if(amount < 2) {
-      dispatch(handleRemoveFromCart(cartItem))
-    } else {
-      dispatch(decreaseAmount(cartItem))
-    }
-  }
+};
 
   return (
     <li className="flex items-center p-4 text-gray-500 border gap-4">
@@ -47,7 +52,7 @@ const CartItem = ({ cartItem }) => {
             </div>
           </div>
 
-          <p className="text-lg">{(price * 0.7).toFixed(2)}$</p>
+          <p className="text-lg">{(price).toFixed(2)}$</p>
         </div>
       </div>
     </li>

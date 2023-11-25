@@ -11,46 +11,59 @@ import { RatingStars } from "../utilities/index";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsFillHeartFill } from "react-icons/bs";
 import { useEffect, useState } from "react";
-import { increaseAmount, decreaseAmount } from "../app/slices/CartSlice";
+
+
 
 const ProductQuickView = () => {
-  //hooks
-  const product = useSelector(SelectProductData);
-  const cartItems = useSelector(selectCartitems);
-  const dispatch = useDispatch();
-  const [itemIsAdded, setitemIsAdded] = useState();
-  const [amount, setamount] = useState(1);
+ // Redux setup
+const product = useSelector(SelectProductData);
+const cartItems = useSelector(selectCartitems);
+const dispatch = useDispatch();
 
-  // component's functions
-  const handlecloseQuickView = () => {
-    dispatch(closeModal());
-  };
+// State for component
+const [itemIsAdded, setitemIsAdded] = useState();
+const [amount, setamount] = useState(1);
 
-  const handleAddtocart = (e) => {
-    itemIsAdded ?  e.preventDefault() : dispatch(addtocart({ ...product, amount }))
+// Component's functions
 
-    setitemIsAdded(true);
-  };
+// Function to close the quick view modal
+const handlecloseQuickView = () => {
+  dispatch(closeModal());
+};
 
-  const AddedProduct = cartItems.find((item) => {
-    return item.id === product.id;
-  });
+// Function to add product to the cart
+const handleAddtocart = (e) => {
+  // Prevent adding to cart if the item is already added
+  itemIsAdded ? e.preventDefault() : dispatch(addtocart({ ...product, amount }));
+  setitemIsAdded(true);
+};
 
-  useEffect(() => {
-    setitemIsAdded(AddedProduct);
-  }, []);
+// Find if the product is already in the cart
+const AddedProduct = cartItems.find((item) => {
+  return item.id === product.id;
+});
 
-  const handleIncreaseAmount = (e) => {
-    itemIsAdded ?  e.preventDefault() : setamount((previousAmount) => previousAmount + 1);
-  };
+// Update itemIsAdded state when the component mounts
+useEffect(() => {
+  setitemIsAdded(AddedProduct);
+}, []);
 
-  const handleDecreaseAmount = (e) => {
-    if (amount > 1 && !itemIsAdded) {
-      setamount((previousAmount) => previousAmount - 1);
-    } else {
-      e.preventDefault()
-    }
-  };
+// Function to increase the amount of the product
+const handleIncreaseAmount = (e) => {
+  // Prevent increasing amount if the item is already added
+  itemIsAdded ? e.preventDefault() : setamount((previousAmount) => previousAmount + 1);
+};
+
+// Function to decrease the amount of the product
+const handleDecreaseAmount = (e) => {
+  // Prevent decreasing amount if the item is already added or the amount is already at the minimum
+  if (amount > 1 && !itemIsAdded) {
+    setamount((previousAmount) => previousAmount - 1);
+  } else {
+    e.preventDefault();
+  }
+};
+
 
   return (
     <div className="flex justify-center">

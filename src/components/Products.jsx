@@ -6,10 +6,12 @@ import { SelectIsShowModal } from "../app/slices/ProductQuickViewSlice";
 
 const Products = ({ showCategories }) => {
   const [category, setcategory] = useState("all");
-  const [categoryActive, setcategoryActive] = useState(false);
   const products = useSelector(SelecteProducts);
   const dispatch = useDispatch();
   const showModal = useSelector(SelectIsShowModal);
+
+
+  
 
   useEffect(() => {
     dispatch(FetchProducts());
@@ -28,7 +30,6 @@ const Products = ({ showCategories }) => {
 
   const handleClickedCategory = (item) => {
     setcategory(item);
-    setcategoryActive(true);
   };
 
   const renderTitleCategories = (...arg) =>
@@ -47,7 +48,7 @@ const Products = ({ showCategories }) => {
     });
 
   return (
-    <div className="container | bg-lightSecondary py-20">
+    <div className="container | bg-lightSecondary py-16 md:py-20">
       {showCategories && (
         <ul className="mx-auto w-fit flex gap-3 sm:gap-4 md:gap-6 mb-8 text-md md:text-xl text-gray-500 ">
           {renderTitleCategories("all", "cloths", "jewelery", "electronics")}
