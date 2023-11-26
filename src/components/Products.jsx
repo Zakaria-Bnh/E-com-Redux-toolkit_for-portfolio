@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FetchProducts, SelecteProducts } from "../app/slices/ProductsSlices";
 import { ProductCard, ProductQuickView } from "./index";
-import { SelectIsShowModal } from "../app/slices/ProductQuickViewSlice";
+import { SelectIsShowModal } from "../../dist/ProductQuickViewSlice";
 
 const Products = ({ showCategories }) => {
   const [category, setcategory] = useState("all");
