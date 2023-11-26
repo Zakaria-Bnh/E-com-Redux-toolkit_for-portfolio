@@ -10,60 +10,92 @@ import { RatingStars } from "../utilities/index";
 // icons
 import { AiOutlineClose } from "react-icons/ai";
 import { BsFillHeartFill } from "react-icons/bs";
+import { IoHeartDislikeSharp } from "react-icons/io5";
+
 import { useEffect, useState } from "react";
 
-
+import {
+  SelectFavorites,
+  addToFavorite,
+  removeFromFavorites,
+} from "../app/slices/FavoritesSlice";
 
 const ProductQuickView = () => {
- // Redux setup
-const product = useSelector(SelectProductData);
-const cartItems = useSelector(selectCartitems);
-const dispatch = useDispatch();
+  // Redux setup
+  const product = useSelector(SelectProductData);
+  const cartItems = useSelector(selectCartitems);
+  const dispatch = useDispatch();
+  // favorite functionality
+  const [itemIsFavorite, setitemIsFavorite] = useState(false);
+  const FavoriteItems = useSelector(SelectFavorites);
 
-// State for component
-const [itemIsAdded, setitemIsAdded] = useState();
-const [amount, setamount] = useState(1);
+  // State for component
+  const [itemIsAdded, setitemIsAdded] = useState();
+  const [amount, setamount] = useState(1);
 
-// Component's functions
+  // Component's functions
 
-// Function to close the quick view modal
-const handlecloseQuickView = () => {
-  dispatch(closeModal());
-};
+  // Function to close the quick view modal
+  const handlecloseQuickView = () => {
+    dispatch(closeModal());
+  };
 
-// Function to add product to the cart
-const handleAddtocart = (e) => {
-  // Prevent adding to cart if the item is already added
-  itemIsAdded ? e.preventDefault() : dispatch(addtocart({ ...product, amount }));
-  setitemIsAdded(true);
-};
+  // Function to add product to the cart
+  const handleAddtocart = (e) => {
+    // Prevent adding to cart if the item is already added
+    itemIsAdded
+      ? e.preventDefault()
+      : dispatch(addtocart({ ...product, amount }));
+    setitemIsAdded(true);
+  };
 
-// Find if the product is already in the cart
-const AddedProduct = cartItems.find((item) => {
-  return item.id === product.id;
-});
+  // Find if the product is already in the cart
+  const AddedProduct = cartItems.find((item) => {
+    return item.id === product.id;
+  });
 
-// Update itemIsAdded state when the component mounts
-useEffect(() => {
-  setitemIsAdded(AddedProduct);
-}, []);
+  // Update itemIsAdded state when the component mounts
+  useEffect(() => {
+    setitemIsAdded(AddedProduct);
+  }, []);
 
-// Function to increase the amount of the product
-const handleIncreaseAmount = (e) => {
-  // Prevent increasing amount if the item is already added
-  itemIsAdded ? e.preventDefault() : setamount((previousAmount) => previousAmount + 1);
-};
+  // Function to increase the amount of the product
+  const handleIncreaseAmount = (e) => {
+    // Prevent increasing amount if the item is already added
+    itemIsAdded
+      ? e.preventDefault()
+      : setamount((previousAmount) => previousAmount + 1);
+  };
 
-// Function to decrease the amount of the product
-const handleDecreaseAmount = (e) => {
-  // Prevent decreasing amount if the item is already added or the amount is already at the minimum
-  if (amount > 1 && !itemIsAdded) {
-    setamount((previousAmount) => previousAmount - 1);
-  } else {
-    e.preventDefault();
-  }
-};
+  // Function to decrease the amount of the product
+  const handleDecreaseAmount = (e) => {
+    // Prevent decreasing amount if the item is already added or the amount is already at the minimum
+    if (amount > 1 && !itemIsAdded) {
+      setamount((previousAmount) => previousAmount - 1);
+    } else {
+      e.preventDefault();
+    }
+  };
 
+  // Check if the item is already in favorites
+  const addedFavorite = FavoriteItems.find((item) => {
+    return item.id === product.id;
+  });
+  // Update favorite state when the component mounts
+  useEffect(() => {
+    setitemIsFavorite(addedFavorite);
+  }, []);
+
+  // Function to handle adding or removing from favorites
+  const handleFavorite = () => {
+    if (!itemIsFavorite) {
+      dispatch(addToFavorite(product));
+      setitemIsFavorite((pre) => !pre);
+    } else {
+      dispatch(removeFromFavorites(product));
+      setitemIsFavorite((pre) => !pre);
+    }
+  };
 
   return (
     <div className="flex justify-center">
@@ -105,7 +137,11 @@ const handleDecreaseAmount = (e) => {
               {product.description}
             </p>
             <div className=" flex flex-col items-start   gap-2 mb-6 rounded-sm">
-              <div className= {` ${itemIsAdded ? 'opacity-50' : ''} flex items-center w-fit p-3 gap-3 border rounded-sm border-gray-500 transition-opacity duration-300`}>
+              <div
+                className={` ${
+                  itemIsAdded ? "opacity-50" : ""
+                } flex items-center w-fit p-3 gap-3 border rounded-sm border-gray-500 transition-opacity duration-300`}
+              >
                 <span className="text-gray-500">quantity</span>
                 <div className="flex items-center gap-2">
                   <button onClick={handleIncreaseAmount}>+</button>
@@ -114,7 +150,7 @@ const handleDecreaseAmount = (e) => {
                 </div>
               </div>
               <button
-                onClick={ handleAddtocart}
+                onClick={handleAddtocart}
                 className={`${
                   itemIsAdded ? "bg-amber-500" : "bg-darkBlue"
                 } tracking-wide  w-full p-3 hover:opacity-80 text-white flex-1 transition-colors duration-300`}
@@ -122,10 +158,17 @@ const handleDecreaseAmount = (e) => {
                 {itemIsAdded ? "ITEM IS ADDED !" : "ADD TO CART"}
               </button>
             </div>
-            <button className="flex items-center gap-2">
-              <BsFillHeartFill className="bg-transparent border" />
+            <button
+              onClick={handleFavorite}
+              className="flex items-center gap-2"
+            >
+              {itemIsFavorite ? (
+                <IoHeartDislikeSharp className="bg-transparent border" />
+              ) : (
+                <BsFillHeartFill className="bg-transparent border" />
+              )}
               <span className="text-gray-500 hover:text-gray-800 ">
-                Add to wish list
+                {itemIsFavorite ? "remove from wishlist!" : "Add to wish list"}
               </span>
             </button>
           </div>

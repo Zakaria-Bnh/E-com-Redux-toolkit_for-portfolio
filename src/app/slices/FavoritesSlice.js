@@ -13,16 +13,15 @@ const FavoriteSlice = createSlice({
         (item) => item.id === action.payload.id
       );
       if (!newItem) {
-        
-        
         state.favorites.push(action.payload);
       } else {
-        
         state.favorites;
       }
     },
     removeFromFavorites(state, action) {
-      state.favorites = state.favorites.filter((item) => item.id !== action.payload.id);
+      state.favorites = state.favorites.filter(
+        (item) => item.id !== action.payload.id
+      );
     },
   },
 });
