@@ -3,10 +3,11 @@ import { useSelector } from 'react-redux';
 import {FavoriteItem} from './index';
 import { SelectFavorites } from '../app/slices/FavoritesSlice';
 
+
 const Favorites = () => {
     const favorites = useSelector(SelectFavorites);
 
-    
+
 
     
   return (

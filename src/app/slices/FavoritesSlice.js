@@ -13,11 +13,11 @@ const FavoriteSlice = createSlice({
         (item) => item.id === action.payload.id
       );
       if (!newItem) {
-        console.log(!newItem, "from if block");
-        console.log(state.favorites, "from if block");
+        
+        
         state.favorites.push(action.payload);
       } else {
-        console.log(state.favorites, "from else block");
+        
         state.favorites;
       }
     },

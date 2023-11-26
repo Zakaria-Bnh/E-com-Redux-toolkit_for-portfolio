@@ -1,63 +1,69 @@
 import { BsFillHeartFill } from "react-icons/bs";
-import { IoHeartDislikeSharp } from "react-icons/io5"; 
+import { IoHeartDislikeSharp } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { ViewProduct, openModal } from "../app/slices/ProductQuickViewSlice";
-import { motion, useAnimation, useInView } from "framer-motion";
+import {
+  motion,
+  useAnimation,
+  useInView,
+} from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import {SelectFavorites, addToFavorite, removeFromFavorites} from '../app/slices/FavoritesSlice'
+import {
+  SelectFavorites,
+  addToFavorite,
+  removeFromFavorites,
+} from "../app/slices/FavoritesSlice";
 
 const ProductCard = ({ data }) => {
   // Redux setup
-const dispatch = useDispatch();
-const FavoriteItems = useSelector(SelectFavorites);
+  const dispatch = useDispatch();
+  const FavoriteItems = useSelector(SelectFavorites);
 
-// State and ref for animation
-const [itemIsFavorite, setitemIsFavorite] = useState(false);
-const productRef = useRef(null);
-const isInView = useInView(productRef);
-const mainAnimationControler = useAnimation();
+  // State and ref for animation
+  const [itemIsFavorite, setitemIsFavorite] = useState(false);
+  const productRef = useRef(null);
+  const isInView = useInView(productRef);
+  const mainAnimationControler = useAnimation();
 
-// Animation variants
-const prodcutAnimation = {
-  hidden: { y: 50, opacity: 0 },
-  visible: { y: 0, opacity: 1 },
-};
+  // Animation variants
+  const prodcutAnimation = {
+    hidden: { y: 50, opacity: 0 },
+    visible: { y: 0, opacity: 1 },
+  };
 
-// Effect to start animation when the component is in view
-useEffect(() => {
-  if (isInView) {
-    mainAnimationControler.start("visible");
-  }
-}, [isInView]);
+  // Effect to start animation when the component is in view
+  useEffect(() => {
+    if (isInView) {
+      mainAnimationControler.start("visible");
+    }
+  }, [isInView]);
 
-// Function to handle quick view
-const handlequickview = () => {
-  dispatch(openModal());
-  dispatch(ViewProduct(data));
-};
+  // Function to handle quick view
+  const handlequickview = () => {
+    dispatch(openModal());
+    dispatch(ViewProduct(data));
+  };
 
-// Function to handle adding or removing from favorites
-const handleFavorite = () => {
-  console.log(itemIsFavorite);
-  if (!itemIsFavorite) {
-    dispatch(addToFavorite(data));
-    setitemIsFavorite(pre => !pre);
-  } else {
-    dispatch(removeFromFavorites(data));
-    setitemIsFavorite(pre => !pre);
-  }
-};
+  // Function to handle adding or removing from favorites
+  const handleFavorite = () => {
+    if (!itemIsFavorite) {
+      dispatch(addToFavorite(data));
+      setitemIsFavorite((pre) => !pre);
+    } else {
+      dispatch(removeFromFavorites(data));
+      setitemIsFavorite((pre) => !pre);
+    }
+  };
 
-// Check if the item is already in favorites
-const addedFavorite = FavoriteItems.find((item) => {
-  return item.id === data.id;
-});
+  // Check if the item is already in favorites
+  const addedFavorite = FavoriteItems.find((item) => {
+    return item.id === data.id;
+  });
 
-// Update favorite state when the component mounts
-useEffect(() => {
-  setitemIsFavorite(addedFavorite);
-}, []);
-
+  // Update favorite state when the component mounts
+  useEffect(() => {
+    setitemIsFavorite(addedFavorite);
+  }, []);
 
   return (
     <motion.div
@@ -86,9 +92,12 @@ useEffect(() => {
           <div className="flex-1 flex flex-col justify-end">
             <div className="flex items-end justify-around mb-3">
               <p className="text-gray-500">
-                <span className="line-through font-light">{(data.price * 1.3).toFixed(2)}</span>$
+                <span className="line-through font-light">
+                  {(data.price * 1.3).toFixed(2)}
+                </span>
+                $
               </p>
-              <p className="text-xl">{(data.price).toFixed(2)}$</p>
+              <p className="text-xl">{data.price.toFixed(2)}$</p>
             </div>
             <div className="flex sm:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <button
@@ -97,9 +106,16 @@ useEffect(() => {
               >
                 Quick view
               </button>
-              <div onClick={handleFavorite} className="bg-gray-700 hover:bg-gray-500 focus:bg-darkBlue cursor-pointer p-2 ">
-                {    itemIsFavorite && <IoHeartDislikeSharp className="w-full text-white h-full " /> }
-                {    !itemIsFavorite && <BsFillHeartFill className="w-full text-white h-full "    /> }
+              <div
+                onClick={handleFavorite}
+                className="bg-gray-700 hover:bg-gray-500 focus:bg-darkBlue cursor-pointer p-2 "
+              >
+                {itemIsFavorite && (
+                  <IoHeartDislikeSharp className="w-full text-white h-full " />
+                )}
+                {!itemIsFavorite && (
+                  <BsFillHeartFill className="w-full text-white h-full " />
+                )}
               </div>
             </div>
           </div>
