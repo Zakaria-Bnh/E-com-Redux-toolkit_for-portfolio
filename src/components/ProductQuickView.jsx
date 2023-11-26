@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   SelectProductData,
   closeModal,
-} from "../../dist/ProductQuickViewSlice";
+} from "../app/slices/ProductQuickViewSlice";
 import { addtocart, selectCartitems } from "../app/slices/CartSlice";
 //utilities
 import { RatingStars } from "../utilities/index";

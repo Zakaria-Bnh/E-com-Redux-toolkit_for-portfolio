@@ -1,7 +1,7 @@
 import { BsFillHeartFill } from "react-icons/bs";
 import { IoHeartDislikeSharp } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import { ViewProduct, openModal } from "../../dist/ProductQuickViewSlice";
+import { ViewProduct, openModal } from "../app/slices/ProductQuickViewSlice";
 import {
   motion,
   useAnimation,
